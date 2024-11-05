@@ -1,0 +1,15 @@
+{% extends "layout_basic.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block title_h1 %}Biblioteca Online{% endblock %}
+
+{% block content %} 
+    {% load static %}
+    <picture>
+        <img src="{% static 'project_books/img/banner_library.jpg' %}" alt='banner'></img>
+    </picture>
+    <h2>Bienvenido a nuestra Biblioteca!</h2>
+{% endblock %}
+
+

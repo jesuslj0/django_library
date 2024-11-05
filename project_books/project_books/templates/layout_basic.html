@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Title Default{% endblock  %}</title>
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'project_books/css/styles.css' %}?v=1.1">
+</head>
+<body>
+    <ul>
+        {% block menu %}
+        <li><a href="{% url 'home'%}">Home</a></li>
+        {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register'%}">Registrarse</a></li>
+        {% endif %}
+        <li><a href="{% url 'books:autores_list'%}">Autores</a></li>
+        <li><a href="{% url 'books:editoriales_list'%}">Editoriales</a></li>
+        <li><a href="{% url 'books:libros_list'%}">Libros</a></li>
+        <li><a href="{% url 'contacto' %}">Contacto</a></li>
+        {% endblock %}
+    </ul>
+
+    <h1>{% block title_h1 %}Title default{% endblock %}</h1>
+    
+    {% block search_form %}
+        {% if search_form %}
+        <form method="GET" action="{% url 'search' %}">
+            {{search_form.as_p}}
+            <button type='submit'>Enviar</button>
+        </form>
+        {% else%}
+        {% endif %}
+    {% endblock %}
+
+    <hr/>
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <p>Sesion iniciada como: <strong>{{user}}</strong></p>
+        <a href="{% url 'logout' %}">Cerrar sesión</a>
+    {% endif %}
+
+    {% include "_include/footer.html" %}
+</body>
+</html>

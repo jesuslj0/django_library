@@ -1,0 +1,19 @@
+{% extends "layout_basic.html" %}
+
+{% block title %}Registro{% endblock %}
+
+{% block title_h1 %}Registrarse{% endblock %}
+
+{% block content %}
+    <h1>Únete a nosotros!</h1>
+    {% if register_form %}
+        <form method='POST' action=''>
+            {% csrf_token %}
+            {{register_form.as_p}}
+            <button>Enviar</button>     
+        </form>
+    {% else %}
+        <p>{{ msg }}</p>
+    {% endif %}
+
+{% endblock %}

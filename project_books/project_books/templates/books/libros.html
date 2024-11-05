@@ -1,0 +1,21 @@
+{% extends 'layout_list.html' %}
+
+{% block title %}Libros{% endblock  %}
+
+{% block title_h1 %}Libros{% endblock %}
+
+{% block list %}
+    <h2>{% block title_h2 %}Lista de libros{% endblock %}</h2>
+    <ul>
+    {% for item in items %}
+        {% block list_item %}
+        <li><a href="{% url 'books:libro_detail' item.id %}">
+            {{item.titulo}}</a>
+        </li>
+        {% endblock %}
+    {% empty %}
+    <li>{% block empty %}No books found.{% endblock %}</li>
+    {% endfor %}   
+    </ul>
+    <p><a href="{% url 'home'%}">Home</a></p>
+{% endblock %}

@@ -1,0 +1,10 @@
+asgiref==3.8.1
+da-vinci==0.4.0
+Django==5.1.1
+django-debug-toolbar==4.4.6
+django-extensions==3.2.3
+django-thumbnails==0.8.0
+pillow==10.4.0
+shortuuid==1.0.13
+sqlparse==0.5.1
+typing_extensions==4.12.2

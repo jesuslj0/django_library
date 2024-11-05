@@ -1,0 +1,38 @@
+{% extends "layout_basic.html" %}
+
+{% block title %}Busqueda{% endblock %}
+{% block title_h1 %}Busqueda{% endblock %}
+
+{% block content %}
+<h2>Resultados</h2>
+    {% if autores %}
+        <h3>Autores</h3>
+        <ul>
+            {% for autor in autores %}
+                <li>{{autor.nombre}} {{autor.apellido}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h3>No se encontraron autores</h3>
+    {% endif %}
+    {% if editoriales %}
+        <h3>Editoriales</h3>
+        <ul>
+            {% for ed in editoriales %}
+                <li>{{ed.nombre}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h3>No se encontraron editoriales</h3>
+    {% endif %}
+    {% if libros %}
+        <h3>Libros</h3>
+        <ul>
+            {% for libro in libros %}
+                <li>{{libro.titulo}}</li>
+                {% endfor %}
+            </ul>
+    {% else %}
+        <h3>No se encontraron libros</h3>
+    {% endif %}
+{% endblock %}

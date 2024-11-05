@@ -1,0 +1,12 @@
+{% extends 'layout_list.html'%}
+{% block title %}Editoriales{% endblock  %}
+
+{% block title_h1 %}Editoriales{% endblock %}
+
+{% block title_h2 %}Lista de editoriales{% endblock %}
+
+{% block list_item %}
+    <li>{{item.nombre}}</li>
+{% endblock %} 
+
+{% block empty%} No editorials found.{% endblock %}

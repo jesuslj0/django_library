@@ -1,0 +1,18 @@
+{% extends "layout_basic.html" %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block title_h1 %}Contacta con nosotros{% endblock %}
+
+{% block content %}
+    {% if success %}
+        <p>Formulario se ha Enviado correctamente!</p>
+    {% else %}
+        <form method='POST' {% url "contacto" %}>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type='submit'>Enviar</button>
+        </form>
+    {% endif %}
+{% endblock %}
+
