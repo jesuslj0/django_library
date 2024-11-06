@@ -1,3 +1,4 @@
+from django.forms import BaseModelForm
 from django.shortcuts import render, redirect
 from .forms import SearchForm, ContactForm, LoginForm, RegisterForm
 from django.core.mail import send_mail
@@ -8,68 +9,71 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 # Vistas generales (basadas en funciones)
-# def root_view(request):
-#     if request:
-#         raise Http404('Página no encontrada')
+
+"""def root_view(request):
+    if request:
+        raise Http404('Página no encontrada')
+"""
     
-# def home_view(request):
-#     search_form = SearchForm()
+"""def home_view(request):
+    search_form = SearchForm()
 
-#     context = {
-#         'search_form': search_form
-#     }
+    context = {
+        'search_form': search_form
+    }
 
-#     return render(request, 'general/home.html', context)
+    return render(request, 'general/home.html', context)
+"""
 
-# def contacto_view(request):
+def contacto_view(request):
 
-#     if request.POST: 
-#         form = ContactForm(request.POST)
+    if request.POST: 
+        form = ContactForm(request.POST)
 
-#         if form.is_valid():
-#             name = form.cleaned_data['name']
-#             email = form.cleaned_data['email']
-#             subject = form.cleaned_data['subject']
-#             coment = form.cleaned_data['coment']
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            coment = form.cleaned_data['coment']
 
-#             send_mail(
-#                 subject,
-#                 f'Mensaje de nuestro seguidor {name}: {coment}',
-#                 settings.EMAIL_HOST_USER,
-#                 ['jesuslopj0@gmail.com'],
-#                 fail_silently=False,
-#             )
+            send_mail(
+                subject,
+                f'Mensaje de nuestro seguidor {name}: {coment}',
+                settings.EMAIL_HOST_USER,
+                ['jesuslopj0@gmail.com'],
+                fail_silently=False,
+            )
 
-#             new_contact = Contacto.objects.create(
-#                 nombre=name,
-#                 email=email,
-#                 motivo=subject,
-#                 mensaje=coment, 
-#             )
+            new_contact = Contacto.objects.create(
+                nombre=name,
+                email=email,
+                motivo=subject,
+                mensaje=coment, 
+            )
 
-#             new_contact.save()
+            new_contact.save()
 
-#             context = {
-#                 'success': True
-#             }
+            context = {
+                'success': True
+            }
 
-#             return render(request, 'general/contacto.html', context)
+            return render(request, 'general/contacto.html', context)
 
-#         else:
-#             context = {
-#                 'form': form,
-#                 'success': False,
-#             }
+        else:
+            context = {
+                'form': form,
+                'success': False,
+            }
 
-#             return render(request, 'general/contacto.html', context)
+            return render(request, 'general/contacto.html', context)
         
-#     form = ContactForm()
+    form = ContactForm()
 
-#     context = {
-#         'form': form 
-#     }
+    context = {
+        'form': form 
+    }
 
-#     return render(request, 'general/contacto.html', context)
+    return render(request, 'general/contacto.html', context)
 
 def search_view(request):
 
@@ -185,8 +189,10 @@ def register_view(request):
 
 # Vistas basadas en Clases
 
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormView, CreateView
+from django.db.models import Q
+from django.urls import reverse_lazy
 
 class HomeView(TemplateView):
     template_name = 'general/home.html'
@@ -212,6 +218,53 @@ class ContactView(FormView):
         
         return super().form_valid(form)
 
+class MultiModelSearchView(TemplateView):
+    template_name = 'general/search.html'
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q")  # Obtenemos el término de búsqueda desde la URL
+        context = self.get_context_data(query=query)
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = kwargs.get("query")
+
+        # Realiza la búsqueda en múltiples modelos usando Q para filtros avanzados
+        if query:
+            # Buscar en el modelo Libro
+            context['libros'] = Libro.objects.filter(
+                Q(titulo__icontains=query) | Q(autores__nombre__icontains=query) | Q(autores__apellido__icontains=query)
+            )
+
+            # Buscar en el modelo Autor
+            context['autores'] = Autor.objects.filter(
+                Q(nombre__icontains=query) | Q(apellido__icontains=query)
+            )
+
+            # Buscar en el modelo Editorial
+            context['editoriales'] = Editorial.objects.filter(
+                nombre__icontains=query
+            )
+            context['search_form'] = SearchForm()
+        else:
+            # Si no hay búsqueda, se devuelve una lista vacía o puedes omitir esta sección
+            context['libros'] = Libro.objects.none()
+            context['autores'] = Autor.objects.none()
+            context['editoriales'] = Editorial.objects.none()
+            context['search_form'] = SearchForm()
+
+        return context
+    
+class RegisterView(CreateView):
+    model = User
+    template_name = 'general/register.html'
+    success_url = reverse_lazy("login")
+    form_class = RegisterForm
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
     
 
     

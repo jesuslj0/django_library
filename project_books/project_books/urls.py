@@ -20,15 +20,16 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import login_view, logout_view, register_view, search_view
-from .views import HomeView, ContactView
+from .views import login_view, logout_view, register_view
+from .views import HomeView, ContactView, MultiModelSearchView, RegisterView
 
 urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('contacto/', ContactView.as_view(), name='contacto'),
-    path('search/', search_view, name='search'),
-    path('register/', register_view, name='register'),
+    path('search/', MultiModelSearchView.as_view(), name='search'),
+
+    path('register/', RegisterView.as_view(), name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
 
