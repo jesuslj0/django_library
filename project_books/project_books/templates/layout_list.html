@@ -15,9 +15,9 @@
         {% if not request.user.is_authenticated %}
         <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
-        <li><a href="{% url 'books:autores_list'%}">Autores</a></li>
-        <li><a href="{% url 'books:editoriales_list'%}">Editoriales</a></li>
-        <li><a href="{% url 'books:libros_list'%}">Libros</a></li>
+        <li><a href="{% url 'autores:list'%}">Autores</a></li>
+        <li><a href="{% url 'editoriales:list'%}">Editoriales</a></li>
+        <li><a href="{% url 'libros:list'%}">Libros</a></li>
         <li><a href="{% url 'contacto' %}">Contacto</a></li>
         {% endblock %}
     </ul>
@@ -38,9 +38,9 @@
         {% block list %}
         <h2>{% block title_h2 %}Lista default{% endblock %}</h2>
         <ul>
-            {% for item in items %}
+            {% for item in context %}
             {% block list_item %}
-            <li><a href="{% url 'books:autor_detail' item.id %}">
+            <li><a href="{% url 'autores:detail' item.id %}">
                 {{item.nombre}} {{item.apellido}}</a>
             </li>
             {% endblock %}

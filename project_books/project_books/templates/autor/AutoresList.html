@@ -6,4 +6,7 @@
 
 {% block title_h2 %}Lista de autores{% endblock %}
 
-
+{% block list %}
+    {{ block.super }}
+    <p><a href="{% url 'autores:create' %}">Crear autor</a></p>
+{% endblock %}

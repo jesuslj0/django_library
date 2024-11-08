@@ -6,7 +6,7 @@
     <title>{% block title %}Title Default{% endblock  %}</title>
     
     {% load static %}
-    <link rel="stylesheet" href="{% static 'project_books/css/styles.css' %}?v=1.2">
+    <link rel="stylesheet" href="{% static 'project_books/css/styles.css' %}?v=1.4">
 </head>
 <body>
     <ul>
@@ -16,9 +16,9 @@
             <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'register'%}">Registrarse</a></li>
         {% endif %}
-        <li><a href="{% url 'books:autores_list'%}">Autores</a></li>
-        <li><a href="{% url 'books:editoriales_list'%}">Editoriales</a></li>
-        <li><a href="{% url 'books:libros_list'%}">Libros</a></li>
+        <li><a href="{% url 'autores:list' %}">Autores</a></li>
+        <li><a href="{% url 'editoriales:list' %}">Editoriales</a></li>
+        <li><a href="{% url 'libros:list' %}">Libros</a></li>
         <li><a href="{% url 'contacto' %}">Contacto</a></li>
         {% endblock %}
     </ul>

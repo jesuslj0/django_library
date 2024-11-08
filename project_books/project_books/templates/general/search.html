@@ -10,7 +10,7 @@
         <h3>Autores</h3>
         <ul>
             {% for autor in autores %}
-                <li>{{autor.nombre}} {{autor.apellido}}</li>
+                <li><a href="{% url 'autores:detail' autor.id %}">{{autor.nombre}} {{autor.apellido}}</a></li>
             {% endfor %}
         </ul>
         {% else %}
@@ -20,7 +20,7 @@
         <h3>Editoriales</h3>
         <ul>
             {% for ed in editoriales %}
-                <li>{{ed.nombre}}</li>
+                <li><a href="{% url 'editoriales:detail' editorial.id %}">{{editorial.nombre}}</a></li>
             {% endfor %}
         </ul>
         {% else %}
@@ -30,7 +30,7 @@
         <h3>Libros</h3>
         <ul>
             {% for libro in libros %}
-                <li>{{libro.titulo}}</li>
+                <li><a href="{% url 'libros:detail' libro.id %}">{{libro.titulo}}</a></li>
                 {% endfor %}
             </ul>
     {% else %}

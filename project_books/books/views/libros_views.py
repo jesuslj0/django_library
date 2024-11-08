@@ -2,6 +2,8 @@
 from django.shortcuts import render
 from books.models import Libro
 from project_books.forms import SearchForm
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 libros_objects = Libro.objects.all()
 
@@ -35,3 +37,29 @@ def libro_detail_view(req, id):
             context['libro'] = libro
 
     return render(req, 'books/libro_detail.html', context)
+
+
+class LibrosListView(ListView):
+    model = Libro
+    template_name = 'libro/LibrosList.html'
+
+
+class LibroDetailView(DetailView):
+    model = Libro
+    template_name = 'libro/LibroDetail.html'
+
+
+class LibroCreateView(CreateView):
+    model = Libro
+    template_name = 'libro/LibroCreate.html'
+
+
+
+class LibroUpdateView(UpdateView):
+    model = Libro
+    template_name = 'libro/LibroUpdate.html'
+
+
+class LibroDeleteView(DeleteView):
+    model = Libro
+    template_name = 'libro/LibroDelete.html'

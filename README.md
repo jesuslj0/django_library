@@ -1,1 +1,6 @@
-Este es un proyecto de una biblioteca online, con opciones de registro y login, además de poder buscar libros, autores y editoriales.
+# Biblioteca Online con Django
+
+### Sus opciones principales son: 
+- Buscar información sobre libros, autores y editoriales
+- Registrarse e iniciar sesión
+- CRUD de entidades sobre los modelos, libros, autores, editoriales

@@ -16,11 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
-
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import login_view, logout_view, register_view
+from .views import login_view, logout_view
 from .views import HomeView, ContactView, MultiModelSearchView, RegisterView
 
 urlpatterns = [
@@ -28,13 +27,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('contacto/', ContactView.as_view(), name='contacto'),
     path('search/', MultiModelSearchView.as_view(), name='search'),
-
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
 
-    path('', include('books.urls', namespace='books')),
+    path('autores/', include('books.urls.autores_urls', namespace='autores')),
+    path('editoriales/', include('books.urls.editoriales_urls', namespace='editoriales')),
+    path('libros/', include('books.urls.libros_urls', namespace='libros')),
+
 ] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:  # Solo sirve archivos de medios en modo de desarrollo
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,14 @@
+{% extends 'layout_basic.html'%}
+
+{% block title %}Detalle del autor{% endblock  %}
+
+{% block title_h1 %}Autores{% endblock  %}
+
+{% block content %}
+    <h2>Borrando a {{autor.name}} {{autor.apellido}}</h2>
+    <form method="post">
+        {%  csrf_token %}
+        <p>¿Deseas elminarlo por completo?</p>
+        <p><button type="submit">Borrar</button> <a href="{% url 'autores:detail' autor.id%}">Cancelar</a></p>
+    </form>
+{% endblock %}
