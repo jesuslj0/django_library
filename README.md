@@ -3,4 +3,5 @@
 ### Sus opciones principales son: 
 - Buscar información sobre libros, autores y editoriales
 - Registrarse e iniciar sesión
-- CRUD de entidades sobre los modelos, libros, autores, editoriales
+- CRUD de entidades sobre los modelos libros, autores, editoriales
+- Protección de borrado y edición de entidades según el usuario
