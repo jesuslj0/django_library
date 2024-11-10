@@ -5,6 +5,11 @@
 
 {% block title_h2 %}Lista de editoriales{% endblock %}
 
+{% block list %}
+    {{ block.super }}
+    <p><a href="{% url 'editoriales:create' %}">Crear editorial</a></p>
+{% endblock %}
+
 {% block list_item %}
     <li><a href="{% url 'editoriales:detail' item.id %}">
         {{item.nombre}}</a>
