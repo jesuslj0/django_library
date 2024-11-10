@@ -7,8 +7,8 @@
 {% block content %}
     <h2>Detalles de la editorial</h2>
     {% if editorial %}
-    <h2>{{editorial.nombre}} {{editorial.ciudad}}</h2>
-    <p>{{editorial.direccion}}</p>
+    <h2>{{editorial.nombre}} ({{editorial.ciudad}})</h2>
+    <p>Dirección: {{editorial.direccion}}</p>
     {% else %}
     <h2>No se encontró la editorial</h2>
     <a href="{% url 'editoriales:list' %}">Lista de editoriales</a>

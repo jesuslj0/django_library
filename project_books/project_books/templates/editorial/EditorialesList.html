@@ -6,7 +6,9 @@
 {% block title_h2 %}Lista de editoriales{% endblock %}
 
 {% block list_item %}
-    <li>{{item.nombre}}</li>
+    <li><a href="{% url 'editoriales:detail' item.id %}">
+        {{item.nombre}}</a>
+    </li>
 {% endblock %} 
 
 {% block empty%} No editorials found.{% endblock %}

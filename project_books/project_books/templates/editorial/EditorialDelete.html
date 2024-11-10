@@ -1,0 +1,14 @@
+{% extends 'layout_basic.html'%}
+
+{% block title %}Detalle de la editorial{% endblock  %}
+
+{% block title_h1 %}Editoriales{% endblock  %}
+
+{% block content %}
+    <h2>Borrando {{editorial.name}}</h2>
+    <form method="post">
+        {%  csrf_token %}
+        <p>¿Deseas elminarla por completo?</p>
+        <p><button type="submit">Borrar</button> <a href="{% url 'autores:detail' autor.id%}">Cancelar</a></p>
+    </form>
+{% endblock %}
