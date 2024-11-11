@@ -7,14 +7,15 @@
 {% block content %}
     <h2>Detalles del libro</h2>
     {% if libro %}
-    <h3>{{libro.titulo}}</h3>
-    <p>{{libro.fecha_publicacion}}</p>
-    {% if libro.portada %}
-        <picture>
-         <img src="{{libro.portada.thumbnails.small.url}}" alt='miniatura'>   
-        </picture>
+        <h3>{{libro.titulo}}</h3>
+        <p>{{libro.fecha_publicacion}}</p>
+        {% if libro.portada %}
+            <picture>
+            <img src="{{libro.portada.thumbnails.small.url}}" alt='miniatura'>   
+            </picture>
     {% endif %}
     <p>{{libro.editorial.nombre}}, {{libro.editorial.pais}}</p>
+    <p><a href="{% url 'libros:update' libro.id %}">Editar</a> <a href="{% url 'libros:delete' libro.id %}">Eliminar</a></p>
     {% else %}
     <h2>No se encontró el libro</h2>
     <a href="{% url 'books:libros_list' %}">Lista de libros</a>
