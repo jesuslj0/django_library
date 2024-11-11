@@ -65,6 +65,10 @@ class AutorCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('autores:detail', kwargs={'id': self.object.id})
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 class AutorUpdateView(UpdateView):
     model = Autor
     template_name = 'autor/AutorUpdate.html'

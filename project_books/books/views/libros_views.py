@@ -5,7 +5,6 @@ from project_books.forms import SearchForm
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-libros_objects = Libro.objects.all()
 
 """
 def libros_view(request):
@@ -66,6 +65,10 @@ class LibroCreateView(CreateView):
 
     def get_success_url(self) -> str:
         return reverse_lazy('libros:detail', kwargs={"id": self.object.id})
+    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 class LibroUpdateView(UpdateView):
     model = Libro

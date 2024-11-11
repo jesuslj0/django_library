@@ -15,7 +15,11 @@
             </picture>
     {% endif %}
     <p>{{libro.editorial.nombre}}, {{libro.editorial.pais}}</p>
-    <p><a href="{% url 'libros:update' libro.id %}">Editar</a> <a href="{% url 'libros:delete' libro.id %}">Eliminar</a></p>
+    <p><a href="{% url 'libros:update' libro.id %}">Editar</a>
+        {% if request.user == libro.created_by %}
+        <a href="{% url 'libros:delete' libro.id %}">Eliminar</a>
+        {% endif %}
+        </p>
     {% else %}
     <h2>No se encontró el libro</h2>
     <a href="{% url 'books:libros_list' %}">Lista de libros</a>

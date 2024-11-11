@@ -1,9 +1,5 @@
  
 from typing import Any
-<<<<<<< HEAD
-=======
-from django.shortcuts import render
->>>>>>> origin/main
 from books.models import Editorial
 from project_books.forms import SearchForm
 from django.views.generic import ListView, DetailView
@@ -58,11 +54,15 @@ class EditorialCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('editoriales:detail', kwargs={'id': self.object.id})
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 class EditorialUpdateView(UpdateView):
     model = Editorial
     template_name = 'editorial/EditorialUpdate.html'
     pk_url_kwarg = 'id'
+    fields = ['nombre', 'direccion', 'ciudad', 'pais']
 
     def get_success_url(self):
         return reverse_lazy('editoriales:detail', kwargs={'id': self.object.id})

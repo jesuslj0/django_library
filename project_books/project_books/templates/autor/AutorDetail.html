@@ -10,7 +10,10 @@
         <h2>{{autor.nombre}} {{autor.apellido}}</h2>
         <span>{{autor.fecha_nacimiento}}</span>
         <p id='bio'>{{autor.biografia}}</p>
-        <p><a href="{% url 'autores:update' autor.id %}">Editar</a> <a href="{% url 'autores:delete' autor.id %}">Eliminar</a></p>
+        <p><a href="{% url 'autores:update' autor.id %}">Editar</a> 
+        {% if request.user == autor.created_by %}
+            <a href="{% url 'autores:delete' autor.id %}">Eliminar</a>
+        {% endif %}</p>
     {% else %}
         <h2>No se encontró el autor</h2>
         <a href="{% url 'autores:list' %}">Lista de autores</a>

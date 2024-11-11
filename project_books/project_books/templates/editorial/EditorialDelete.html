@@ -9,10 +9,6 @@
     <form method="post">
         {%  csrf_token %}
         <p>¿Deseas elminarla por completo?</p>
-<<<<<<< HEAD
-        <p><button type="submit">Borrar</button> <a href="{% url 'autores:detail' autor.id%}">Cancelar</a></p>
-=======
         <p><button type="submit">Borrar</button> <a href="{% url 'editoriales:detail' editorial.id%}">Cancelar</a></p>
->>>>>>> origin/main
     </form>
 {% endblock %}
