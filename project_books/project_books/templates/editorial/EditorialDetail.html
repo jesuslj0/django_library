@@ -9,6 +9,10 @@
     {% if editorial %}
     <h2>{{editorial.nombre}} ({{editorial.ciudad}})</h2>
     <p>Dirección: {{editorial.direccion}}</p>
+<<<<<<< HEAD
+=======
+    <p><a href="{% url 'editoriales:update' editorial.id %}">Editar</a> <a href="{% url 'editoriales:delete' editorial.id %}">Eliminar</a></p>
+>>>>>>> origin/main
     {% else %}
     <h2>No se encontró la editorial</h2>
     <a href="{% url 'editoriales:list' %}">Lista de editoriales</a>

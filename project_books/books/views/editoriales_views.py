@@ -1,5 +1,9 @@
  
 from typing import Any
+<<<<<<< HEAD
+=======
+from django.shortcuts import render
+>>>>>>> origin/main
 from books.models import Editorial
 from project_books.forms import SearchForm
 from django.views.generic import ListView, DetailView
