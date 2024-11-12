@@ -1,9 +1,13 @@
 from typing import Any
+from django.http import HttpRequest
+from django.http.response import HttpResponse as HttpResponse
 from books.models import Autor
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from project_books.forms import SearchForm
 from django.urls import reverse_lazy
+from books.decorators import user_can_edit, user_can_delete
+from django.utils.decorators import method_decorator
 
 """def autores_view(request):
 
@@ -69,6 +73,7 @@ class AutorCreateView(CreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
+@method_decorator(user_can_edit(Autor), name='dispatch')
 class AutorUpdateView(UpdateView):
     model = Autor
     template_name = 'autor/AutorUpdate.html'
@@ -78,7 +83,7 @@ class AutorUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('autores:detail', kwargs={'id': self.object.id})
 
-
+@method_decorator(user_can_delete(Autor), name='dispatch')
 class AutorDeleteView(DeleteView):
     model = Autor
     template_name = 'autor/AutorDelete.html'

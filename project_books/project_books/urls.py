@@ -19,8 +19,7 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import login_view, logout_view
-from .views import HomeView, ContactView, MultiModelSearchView, RegisterView
+from .views import HomeView, ContactView, MultiModelSearchView, RegisterView, LoginView, LogoutView
 
 urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),
@@ -28,8 +27,8 @@ urlpatterns = [
     path('contacto/', ContactView.as_view(), name='contacto'),
     path('search/', MultiModelSearchView.as_view(), name='search'),
     path('register/', RegisterView.as_view(), name='register'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 
     path('autores/', include('books.urls.autores_urls', namespace='autores')),
     path('editoriales/', include('books.urls.editoriales_urls', namespace='editoriales')),

@@ -5,6 +5,8 @@ from project_books.forms import SearchForm
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from books.decorators import user_can_edit, user_can_delete
+from django.utils.decorators import method_decorator   
 
 """
 def libros_view(request):
@@ -70,6 +72,7 @@ class LibroCreateView(CreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
+@method_decorator(user_can_edit(Libro), name='dispatch')
 class LibroUpdateView(UpdateView):
     model = Libro
     template_name = 'libro/LibroUpdate.html'
@@ -79,7 +82,7 @@ class LibroUpdateView(UpdateView):
     def get_success_url(self) -> str:
         return reverse_lazy('libros:detail', kwargs={'id': self.object.id})
 
-
+@method_decorator(user_can_delete(Libro), name='dispatch')
 class LibroDeleteView(DeleteView):
     model = Libro
     template_name = 'libro/LibroDelete.html'

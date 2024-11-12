@@ -1,4 +1,3 @@
-from django.forms import BaseModelForm
 from django.shortcuts import render, redirect
 from .forms import SearchForm, ContactForm, LoginForm, RegisterForm
 from django.core.mail import send_mail
@@ -193,9 +192,22 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView, CreateView
 from django.db.models import Q
 from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib import messages
 
 class HomeView(TemplateView):
     template_name = 'general/home.html'
+
+class LoginView(LoginView):
+    template_name = 'general/login.html'
+    authentication_form = LoginForm
+
+class LogoutView(LogoutView):
+    next_page = reverse_lazy('login')
+
+    def dispatch(self, request, *args, **kwargs): 
+        messages.success(request, "Has cerrado sesión correctamente.") 
+        return super().dispatch(request, *args, **kwargs)
 
 class ContactView(FormView):
     template_name = "general/contacto.html"
