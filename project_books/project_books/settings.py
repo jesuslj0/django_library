@@ -58,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -75,6 +74,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #Custom context processors
+                'project_books.context_processors.get_user_logged',
+                'project_books.context_processors.get_current_year',
             ],
         },
     },
@@ -187,3 +189,5 @@ EMAIL_HOST_PASSWORD = 'bcdn blph tcpy ovqg'
 
 # Contraseña de aplicacion
 # bcdn blph tcpy ovqg
+
+# Variables de entorno

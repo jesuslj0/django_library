@@ -8,9 +8,11 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
 """
 
 import os
+import sys 
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project_books.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project_books.project_books.settings')
+sys.path.append(os.path.join(os.path.dirname(__file__), 'project_books'))
 
 application = get_wsgi_application()

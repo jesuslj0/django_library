@@ -3,6 +3,7 @@
 import os
 import sys
 
+sys.path.append(os.path.join(os.path.dirname(__file__), 'project_books'))
 
 def main():
     """Run administrative tasks."""

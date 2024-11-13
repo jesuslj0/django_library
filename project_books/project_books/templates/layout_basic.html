@@ -53,7 +53,7 @@
         <div id="session">
             <form method="post" action="{% url 'logout' %}"> 
                 {% csrf_token %} 
-                <p>Usuario: <strong>{{request.user}}</strong></p>
+                <p>Usuario: <strong>{{user_logged}}</strong></p>
                 <button type="submit">Cerrar sesión</button> 
             </form>
         </div>
