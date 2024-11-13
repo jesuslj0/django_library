@@ -12,10 +12,26 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Variables de entorno
+import environ
+import os
 
-TEMPLATES_DIR = BASE_DIR / 'project_books' / 'templates' 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join('.env'))
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('SECRET_KEY')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'project_books', 'templates') 
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
@@ -24,11 +40,8 @@ LOGOUT_REDIRECT_URL = 'login'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=%x_8n$yek^ub0ehdwd(*)73xk$13okfird$k2rv2!zfgvd5o@'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -91,7 +104,7 @@ WSGI_APPLICATION = 'project_books.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.library.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.library.sqlite3'),
     }
 }
 
@@ -137,7 +150,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "project_books" / "static",
+    os.path.join(BASE_DIR, "project_books", "static"),
 ]
 
 # Default primary key field type
@@ -152,7 +165,6 @@ INTERNAL_IPS = [
     # ...
 ]
 
-import os
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -185,9 +197,3 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jesuslopj0@gmail.com'
-EMAIL_HOST_PASSWORD = 'bcdn blph tcpy ovqg'
-
-# Contraseña de aplicacion
-# bcdn blph tcpy ovqg
-
-# Variables de entorno
