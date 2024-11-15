@@ -54,11 +54,21 @@ div#session {
     top: 15px;
     right: 30px;
     background-color: #7de4e9;
-    padding: 8px 16px;
+    padding: 0px 16px;
     border-radius: 12px;
 }
 
 #bio {
     max-width: 700px;
     height: auto;
+}
+
+.success {
+    background-color: rgba(23, 187, 23, 0.8);
+    border-radius: 8px;
+    color: white;
+    padding: 15px;
+    position: absolute;
+    top: 70px;
+    left: 40%;
 }

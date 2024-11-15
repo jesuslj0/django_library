@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect
+from django.http.response import HttpResponse as HttpResponse
 from .forms import SearchForm, ContactForm, LoginForm, RegisterForm
 from django.core.mail import send_mail
 from django.conf import settings
 from books.models import Autor, Libro, Editorial, Contacto
-from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
 from django.contrib.auth.models import User
 
 # Vistas generales (basadas en funciones)
@@ -24,7 +22,7 @@ from django.contrib.auth.models import User
     return render(request, 'general/home.html', context)
 """
 
-def contacto_view(request):
+"""def contacto_view(request):
 
     if request.POST: 
         form = ContactForm(request.POST)
@@ -73,8 +71,9 @@ def contacto_view(request):
     }
 
     return render(request, 'general/contacto.html', context)
+"""
 
-def search_view(request):
+"""def search_view(request):
 
     search_form = SearchForm(request.GET)
 
@@ -103,8 +102,9 @@ def search_view(request):
     }
 
     return render(request, 'general/search.html', context)
+"""
 
-def login_view(request):
+"""def login_view(request):
     if request.POST:
         login_form = LoginForm(request.POST)
         
@@ -138,12 +138,14 @@ def login_view(request):
         }
 
     return render(request, 'general/login.html', context)
+"""
 
-def logout_view(request): 
+"""def logout_view(request): 
     logout(request)
     return redirect(reverse('home'))
+"""
 
-def register_view(request):
+"""def register_view(request):
 
     if request.POST:
         register_form = RegisterForm(request.POST)
@@ -185,6 +187,7 @@ def register_view(request):
         }
 
     return render(request, 'general/register.html', context)
+"""
 
 # Vistas basadas en Clases
 
@@ -198,27 +201,59 @@ from django.contrib import messages
 class HomeView(TemplateView):
     template_name = 'general/home.html'
 
-class LoginView(LoginView):
+
+class MessageMixin:
+    success_message = ''
+    error_message = ''
+
+    def form_valid(self, form):
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        if self.error_message:
+            messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
+
+
+class LoginView(MessageMixin, LoginView):
     template_name = 'general/login.html'
     authentication_form = LoginForm
+    success_message = 'Iniciaste sesión correctamente.'
+    error_message = 'Error en el inicio de sesión.'
+
 
 class LogoutView(LogoutView):
     next_page = reverse_lazy('login')
+    error_message = "Error al cerrar sesión."
 
-    def dispatch(self, request, *args, **kwargs): 
-        messages.success(request, "Has cerrado sesión correctamente.") 
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request, "Has cerrado sesión. ¡Hasta pronto!")
         return super().dispatch(request, *args, **kwargs)
 
-class ContactView(FormView):
+
+class ContactView(MessageMixin, FormView):
+    model = Contacto
     template_name = "general/contacto.html"
     form_class = ContactForm
     success_url = "/contacto/"
+    success_message = "Formulario enviado correctamente. Gracias por escribirnos!"
+    error_message = "Error al enviar el formulario."
 
     def form_valid(self, form):
         name = form.cleaned_data['name']
         email = form.cleaned_data['email']
         subject = form.cleaned_data['subject']
         coment = form.cleaned_data['coment']
+
+        new_contact = Contacto.objects.create(
+                nombre=name,
+                email=email,
+                motivo=subject,
+                mensaje=coment, 
+            )
+        new_contact.save()
 
         send_mail(
             subject,
@@ -227,8 +262,9 @@ class ContactView(FormView):
             [email],
             fail_silently=False,
         )
-        
+
         return super().form_valid(form)
+    
 
 class MultiModelSearchView(TemplateView):
     template_name = 'general/search.html'
@@ -268,6 +304,7 @@ class MultiModelSearchView(TemplateView):
 
         return context
     
+
 class RegisterView(CreateView):
     model = User
     template_name = 'general/register.html'
@@ -275,6 +312,7 @@ class RegisterView(CreateView):
     form_class = RegisterForm
 
     def form_valid(self, form):
+        messages.success(self.request, 'Usuario registrado correctamente!')
         return super().form_valid(form)
     
     
