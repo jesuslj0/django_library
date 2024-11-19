@@ -24,6 +24,10 @@ ul > li:first-of-type::before{
     content: '';
 }
 
+ul > li {
+    align-self: center;
+}
+
 footer {
     background-color: #8dc6ef; 
     padding: 20px; 
@@ -69,6 +73,6 @@ div#session {
     color: white;
     padding: 15px;
     position: absolute;
-    top: 70px;
+    top: 90px;
     left: 40%;
 }

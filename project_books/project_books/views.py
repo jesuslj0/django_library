@@ -191,12 +191,14 @@ from django.contrib.auth.models import User
 
 # Vistas basadas en Clases
 
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView, CreateView
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.utils import translation
+from django.http import HttpResponseRedirect
 
 class HomeView(TemplateView):
     template_name = 'general/home.html'
@@ -315,6 +317,15 @@ class RegisterView(CreateView):
         messages.success(self.request, 'Usuario registrado correctamente!')
         return super().form_valid(form)
     
-    
 
+class SetLanguageView(View):
     
+    def post(self, request, *args, **kwargs):
+        language = request.POST.get('language', None)
+
+        if language:
+            translation.activate(language)
+            # request.session[translation.LANGUAGE_SESSION_KEY] = language
+        
+        next_url = request.POST.get('next', '/')
+        return HttpResponseRedirect(next_url)

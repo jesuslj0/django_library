@@ -14,14 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import HomeView, ContactView, MultiModelSearchView, RegisterView, LoginView, LogoutView
+from .views import HomeView, ContactView, MultiModelSearchView, RegisterView, LoginView, LogoutView, SetLanguageView
 
 urlpatterns = [
+    re_path(r'^rosetta/', include('rosetta.urls')),
+    path('set-language/', SetLanguageView.as_view(), name='set_language'),
     path('home/', HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('contacto/', ContactView.as_view(), name='contacto'),

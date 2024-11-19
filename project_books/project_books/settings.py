@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_extensions",
     "thumbnails",
+    "rosetta",
 
     'books',
 ]
@@ -132,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -142,6 +143,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('es', 'Spanish'),
+    ('en', 'English'),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
+
+LANGUAGE_COOKIE_NAME = 'django-language'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
