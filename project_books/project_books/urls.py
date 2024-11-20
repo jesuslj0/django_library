@@ -14,16 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.static import static
 from django.conf import settings
-
-from .views import HomeView, ContactView, MultiModelSearchView, RegisterView, LoginView, LogoutView, SetLanguageView
+from django.conf.urls.i18n import i18n_patterns
+from .views import HomeView, ContactView, MultiModelSearchView, RegisterView, LoginView, LogoutView
 
 urlpatterns = [
-    re_path(r'^rosetta/', include('rosetta.urls')),
-    path('set-language/', SetLanguageView.as_view(), name='set_language'),
+    path('i18n/', include('django.conf.urls.i18n')),
+] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += i18n_patterns(
     path('home/', HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('contacto/', ContactView.as_view(), name='contacto'),
@@ -35,10 +37,12 @@ urlpatterns = [
     path('autores/', include('books.urls.autores_urls', namespace='autores')),
     path('editoriales/', include('books.urls.editoriales_urls', namespace='editoriales')),
     path('libros/', include('books.urls.libros_urls', namespace='libros')),
-
-] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+)
 
 if settings.DEBUG:  # Solo sirve archivos de medios en modo de desarrollo
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+if 'rosetta' in settings.INSTALLED_APPS:
+    urlpatterns += [
+        path('rosetta/', include('rosetta.urls')),
+    ]

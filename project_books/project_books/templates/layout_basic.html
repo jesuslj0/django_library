@@ -12,24 +12,29 @@
 <body>
     <ul>
         {% block menu %}
-        <li><a href="{% url 'home'%}">Home</a></li>
-        {% if not request.user.is_authenticated %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register'%}">Registrarse</a></li>
-        {% endif %}
-        <li><a href="{% url 'autores:list' %}">Autores</a></li>
-        <li><a href="{% url 'editoriales:list' %}">Editoriales</a></li>
-        <li><a href="{% url 'libros:list' %}">Libros</a></li>
-        <li><a href="{% url 'contacto' %}">Contacto</a></li>
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <select name="language">
-                <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
-                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-            </select>
-            <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit">Cambiar idioma</button>
-        </form>
+            <li><a href="{% url 'home'%}">Home</a></li>
+            {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register'%}">Registrarse</a></li>
+            {% endif %}
+            <li><a href="{% url 'autores:list' %}">Autores</a></li>
+            <li><a href="{% url 'editoriales:list' %}">Editoriales</a></li>
+            <li><a href="{% url 'libros:list' %}">Libros</a></li>
+            <li><a href="{% url 'contacto' %}">Contacto</a></li>
+            
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <select name="language">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% for lang_code, lang_name in LANGUAGES %}
+                    <option value="{{lang_code}}" {% if LANGUAGE_CODE == lang_code %}selected{% endif %}>
+                        {{lang_name}} ({{lang_code}})
+                    </option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button type="submit">Cambiar idioma</button>
+            </form>
         {% endblock %}
     </ul>
 
