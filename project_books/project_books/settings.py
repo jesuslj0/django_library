@@ -55,10 +55,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "debug_toolbar",
     "django_extensions",
     "thumbnails",
     "rosetta",
+    "modeltranslation",
+    "debug_toolbar",
 
     'books',
 ]
@@ -157,6 +158,9 @@ LOCALE_PATHS = [
 ]
 
 LANGUAGE_COOKIE_NAME = 'django-language'
+
+# Model translation
+MODELTRANSLATION_LANGUAGES = ('es', 'en')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

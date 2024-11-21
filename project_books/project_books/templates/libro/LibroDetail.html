@@ -1,19 +1,33 @@
 {% extends 'layout_basic.html'%}
+{% load i18n %}
 
-{% block title %}Detalle del libro{% endblock  %}
+{% block title %}{% trans 'Detalle del libro' %}{% endblock  %}
 
-{% block title_h1 %}Libros{% endblock  %}
+{% block title_h1 %}{% trans 'Libros' %}{% endblock  %}
 
 {% block content %}
-    <h2>Detalles del libro</h2>
+    <h2>{% trans 'Detalles del libro' %}</h2>
     {% if libro %}
         <h3>{{libro.titulo}}</h3>
         <p>{{libro.fecha_publicacion}}</p>
+        {% if libro.autores.all|length == 1 %}
+            {% for autor in libro.autores.all %}
+            <p>Autor: {{autor.nombre}} {{autor.apellido}}</p>
+            {% endfor %}
+        {% else%}
+        <p>Autores:</p>
+        <ul>
+            {% for autor in libro.autores.all %}
+            <li>{{autor.nombre}} {{autor.apellido}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% if libro.portada %}
             <picture>
             <img src="{{libro.portada.thumbnails.small.url}}" alt='miniatura'>   
             </picture>
-    {% endif %}
+        {% endif %}
+    <p class="sinopsis">{{libro.descripcion}}</p>
     <p>{{libro.editorial.nombre}}, {{libro.editorial.pais}}</p>
     <p><a href="{% url 'libros:update' libro.id %}">Editar</a>
         {% if request.user == libro.created_by %}

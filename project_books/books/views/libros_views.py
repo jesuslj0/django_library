@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from books.decorators import user_can_edit, user_can_delete
 from django.utils.decorators import method_decorator   
+from modeltranslation.translator import register, TranslationOptions
 
 """
 def libros_view(request):
@@ -88,3 +89,8 @@ class LibroDeleteView(DeleteView):
     template_name = 'libro/LibroDelete.html'
     success_url = reverse_lazy('libros:list') 
     pk_url_kwarg = 'id'
+
+
+@register(Libro)
+class LibroTranslationOptions(TranslationOptions):
+    fields = ['titulo', 'descripcion']

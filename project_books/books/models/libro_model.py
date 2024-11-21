@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 class Libro(models.Model):
     titulo = models.CharField(max_length=200)
+    descripcion = models.CharField(max_length=1000, blank=True, null=True)
     fecha_publicacion = models.DateField()
     autores = models.ManyToManyField(Autor)  # Muchos a muchos
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE)  # Uno a muchos

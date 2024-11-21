@@ -76,3 +76,7 @@ div#session {
     top: 90px;
     left: 40%;
 }
+
+.sinopsis {
+    max-width: 700px;
+}
