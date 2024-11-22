@@ -104,10 +104,23 @@ WSGI_APPLICATION = 'project_books.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# Configuracion SQLite3
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.library.sqlite3'),
+#     }
+# }
+
+# Configuracion MySQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.library.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',       # Cambiar el motor
+        'NAME': 'library',                       # Nombre de tu base de datos
+        'USER': 'root',                             # Usuario de MySQL
+        'PASSWORD': env('SQL_USER_PASSWORD'),       # Contraseña del usuario
+        'HOST': 'localhost',                        # Dirección del host (e.g., localhost o IP)
+        'PORT': '3306',                             # Puerto de MySQL (3306 es el predeterminado)
     }
 }
 
@@ -161,6 +174,7 @@ LANGUAGE_COOKIE_NAME = 'django-language'
 
 # Model translation
 MODELTRANSLATION_LANGUAGES = ('es', 'en')
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('es', 'en')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
