@@ -59,10 +59,16 @@ INSTALLED_APPS = [
     "thumbnails",
     "rosetta",
     "modeltranslation",
+    "crispy_forms",
+    "crispy_bootstrap5",
     "debug_toolbar",
 
     'books',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -183,6 +189,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "project_books", "static"),
+    os.path.abspath(os.path.join(BASE_DIR, '..', "static"))
 ]
 
 # Default primary key field type

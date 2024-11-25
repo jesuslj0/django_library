@@ -1,5 +1,6 @@
 {% extends "layout_basic.html" %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block title %}{% trans 'Contacto'%}{% endblock %}
 
@@ -8,8 +9,8 @@
 {% block content %}
         <form method='POST' {% url "contacto" %}>
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type='submit'>{% trans 'Enviar' %}</button>
+            {% crispy form %}
+            <button type='submit' class="btn btn-primary">{% trans 'Enviar' %}</button>
         </form>
 {% endblock %}
 

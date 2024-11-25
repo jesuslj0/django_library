@@ -1,8 +1,10 @@
 asgiref==3.8.1
 certifi==2024.8.30
 charset-normalizer==3.4.0
+crispy-bootstrap5==2024.10
 da-vinci==0.4.0
 Django==5.1.1
+django-crispy-forms==2.3
 django-debug-toolbar==4.4.6
 django-environ==0.11.2
 django-extensions==3.2.3

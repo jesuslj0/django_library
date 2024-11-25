@@ -1,0 +1,18 @@
+{
+  "name": "books",
+  "version": "1.0.0",
+  "description": "### Sus opciones principales son:  - Buscar información sobre libros, autores y editoriales - Registrarse e iniciar sesión - CRUD de entidades sobre los modelos libros, autores, editoriales - Protección de borrado y edición de entidades según el usuario",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "mkdir -p static/css && cp node_modules/bootstrap/dist/css/bootstrap.min.css static/css/",
+    "build:js": "mkdir -p static/js && cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js static/js/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3"
+  }
+}
